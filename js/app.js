@@ -47,9 +47,7 @@
       <header class="app-header">
         <div class="brand">
           <div class="brand-logo">
-            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
-              <path d="M5 12l5 5L20 7" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            <img src="assets/icons/app-logo.png" alt="حياتي" />
           </div>
           <div class="brand-text">
             <span class="brand-name">حياتي</span>
@@ -96,9 +94,7 @@
       <header class="app-header">
         <div class="brand">
           <div class="brand-logo">
-            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
-              <path d="M5 12l5 5L20 7" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            <img src="assets/icons/app-logo.png" alt="حياتي" />
           </div>
           <div class="brand-text">
             <span class="brand-name">حياتي</span>
@@ -432,7 +428,7 @@
         </div>
         <div style="text-align:center; padding:20px 0;">
           <div class="splash-logo" style="margin:0 auto 16px; width:72px; height:72px; border-radius:22px;">
-            <svg viewBox="0 0 64 64" width="44" height="44"><path d="M22 34 L29 41 L43 25" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <img src="assets/icons/app-logo.png" alt="حياتي" width="60" height="60" style="border-radius:16px;object-fit:cover;" />
           </div>
           <h2 style="font-size:24px;">حياتي</h2>
           <p class="text-muted text-sm mt-12">مساعدك الشخصي لتنظيم يومك وحياتك</p>
@@ -815,8 +811,8 @@
       animation: bannerIn .4s cubic-bezier(.2,.8,.2,1);
     `;
     banner.innerHTML = `
-      <div style="width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#0066FF,#22B8FF);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div style="width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#0066FF,#22B8FF);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;">
+        <img src="assets/icons/app-logo.png" alt="" width="34" height="34" style="border-radius:9px;object-fit:cover;" />
       </div>
       <div style="flex:1;min-width:0;">
         <div style="font-weight:700;font-size:13.5px;">ثبّت حياتي على جهازك</div>
@@ -873,8 +869,8 @@
     `;
     banner.innerHTML = `
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-        <div style="width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,#0066FF,#22B8FF);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div style="width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,#0066FF,#22B8FF);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;">
+          <img src="assets/icons/app-logo.png" alt="" width="28" height="28" style="border-radius:7px;object-fit:cover;" />
         </div>
         <div style="flex:1;font-weight:700;font-size:13.5px;">ثبّت حياتي على الـ iPhone</div>
         <button id="ios-hint-dismiss" style="background:transparent;border:0;padding:4px;color:var(--muted,#7B8797);" aria-label="إغلاق">
