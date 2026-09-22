@@ -211,6 +211,125 @@ li {
   background: rgba(52,120,246,.18);
 }
 
+/* =========================================================
+   LOGO / IMAGES
+   ========================================================= */
+
+/* ---------- Splash Logo ---------- */
+
+.splash-logo {
+  width: 92px;
+  height: 92px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+  border-radius: 27px;
+
+  /*
+   * مهم:
+   * الخلفية أصبحت شفافة حتى تظهر صورة اللوجو
+   * المرفوعة بدون طبقة زرقاء فوقها.
+   */
+  background: transparent;
+
+  box-shadow: none;
+
+  animation: splashPulse 2.2s ease-in-out infinite;
+}
+
+.splash-logo img {
+  display: block;
+
+  width: 92px;
+  height: 92px;
+
+  object-fit: contain;
+
+  border-radius: 27px;
+
+  /*
+   * منع أي تشويه للصورة
+   */
+  max-width: 100%;
+  max-height: 100%;
+
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* ---------- Header Logo ---------- */
+
+.app-header .brand-logo {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+  border-radius: 14px;
+
+  /*
+   * اللوجو نفسه هو الصورة
+   */
+  background: transparent;
+
+  box-shadow:
+    0 7px 17px rgba(52,120,246,.14);
+
+  flex-shrink: 0;
+}
+
+.app-header .brand-logo img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  border-radius: inherit;
+
+  max-width: 100%;
+  max-height: 100%;
+
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* ---------- General Logo Images ---------- */
+
+.logo-img,
+.app-logo,
+.brand-logo img,
+.splash-logo img {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* لو الصورة اتضافت كـ img مباشرة داخل أي عنصر لوجو */
+.logo-img {
+  display: block;
+  object-fit: contain;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* ---------- Image Safety ---------- */
+
+img {
+  max-width: 100%;
+}
+
+img[draggable="false"] {
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
 /* ---------- Splash ---------- */
 
 .splash-screen {
@@ -243,31 +362,6 @@ li {
 
   animation:
     splashIn .7s cubic-bezier(.2,.8,.2,1);
-}
-
-.splash-logo {
-  width: 92px;
-  height: 92px;
-  border-radius: 27px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background: var(--brand-gradient);
-
-  box-shadow:
-    0 18px 42px rgba(52,120,246,.22),
-    inset 0 1px 0 rgba(255,255,255,.28);
-
-  animation: splashPulse 2.2s ease-in-out infinite;
-}
-
-.splash-logo img {
-  width: 76px;
-  height: 76px;
-  object-fit: contain;
-  border-radius: 22px;
 }
 
 .splash-title {
@@ -377,32 +471,6 @@ li {
   align-items: center;
   gap: 10px;
   min-width: 0;
-}
-
-.app-header .brand-logo {
-  width: 42px;
-  height: 42px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  overflow: hidden;
-  border-radius: 14px;
-
-  background: var(--brand-gradient);
-
-  box-shadow:
-    0 7px 17px rgba(52,120,246,.18),
-    inset 0 1px 0 rgba(255,255,255,.22);
-
-  flex-shrink: 0;
-}
-
-.app-header .brand-logo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 
 .app-header .brand-text {
