@@ -3,7 +3,7 @@
    Offline-first caching, install prompt support
    ========================================================= */
 
-const CACHE_VERSION = 'hayati-v1.0.2-icons';
+const CACHE_VERSION = 'hayati-v1.0.3-icons';
 const STATIC_CACHE = CACHE_VERSION + '-static';
 const RUNTIME_CACHE = CACHE_VERSION + '-runtime';
 
