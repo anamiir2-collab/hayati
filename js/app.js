@@ -246,12 +246,6 @@
 
       <div class="section-title"><h2>عن التطبيق</h2></div>
       <div class="settings-group">
-        <button class="settings-row" id="s-install-app">
-          <div class="sr-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 8l5-5 5 5M5 21h14"/></svg></div>
-          <div class="sr-label">تثبيت التطبيق</div>
-          <div class="sr-value">إضافة للشاشة الرئيسية</div>
-          <div class="sr-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M14 6l-6 6 6 6"/></svg></div>
-        </button>
         <button class="settings-row" id="s-about">
           <div class="sr-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8v.5"/></svg></div>
           <div class="sr-label">عن حياتي</div>
