@@ -1,37 +1,77 @@
-<!-- PWA Icons -->
-<link
-  rel="icon"
-  type="image/png"
-  sizes="32x32"
-  href="assets/icons/favicon-32.png"
-/>
+const CACHE_NAME = "hayati-v3";
 
-<link
-  rel="icon"
-  type="image/png"
-  sizes="192x192"
-  href="assets/icons/icon-192.png"
-/>
+const APP_SHELL = [
+  "./",
+  "./index.html",
+  "./manifest.json",
 
-<link
-  rel="icon"
-  type="image/png"
-  sizes="512x512"
-  href="assets/icons/icon-512.png"
-/>
+  "./assets/icons/favicon-32.png",
+  "./assets/icons/icon-192.png",
+  "./assets/icons/icon-512.png",
+  "./assets/icons/icon-512-maskable.png",
+  "./assets/icons/apple-touch-icon.png",
+  "./assets/icons/shortcut-habits.png"
+];
 
-<link
-  rel="apple-touch-icon"
-  sizes="180x180"
-  href="assets/icons/apple-touch-icon.png"
-/>
+self.addEventListener("install", event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(APP_SHELL))
+      .then(() => self.skipWaiting())
+  );
+});
 
-<meta
-  name="msapplication-TileImage"
-  content="assets/icons/icon-192.png"
-/>
+self.addEventListener("activate", event => {
+  event.waitUntil(
+    caches.keys()
+      .then(keys =>
+        Promise.all(
+          keys
+            .filter(key => key !== CACHE_NAME)
+            .map(key => caches.delete(key))
+        )
+      )
+      .then(() => self.clients.claim())
+  );
+});
 
-<meta
-  name="theme-color"
-  content="#0066FF"
-/>
+self.addEventListener("fetch", event => {
+  const request = event.request;
+
+  if (request.method !== "GET") return;
+
+  event.respondWith(
+    caches.match(request)
+      .then(cachedResponse => {
+
+        if (cachedResponse) {
+          return cachedResponse;
+        }
+
+        return fetch(request)
+          .then(response => {
+
+            if (
+              !response ||
+              response.status !== 200 ||
+              response.type === "opaque"
+            ) {
+              return response;
+            }
+
+            const responseClone = response.clone();
+
+            caches.open(CACHE_NAME)
+              .then(cache => {
+                cache.put(request, responseClone);
+              });
+
+            return response;
+          })
+          .catch(() => {
+            return caches.match("./index.html");
+          });
+
+      })
+  );
+});
