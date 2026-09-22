@@ -895,3 +895,23 @@
   global.closeModals = closeModals;
   document.addEventListener('DOMContentLoaded', App.init);
 })(window);
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("./sw.js")
+      .then(registration => {
+        console.log(
+          "Hayati Service Worker registered:",
+          registration.scope
+        );
+
+        registration.update();
+      })
+      .catch(error => {
+        console.error(
+          "Hayati Service Worker registration failed:",
+          error
+        );
+      });
+  });
+}
