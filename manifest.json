@@ -1,42 +1,28 @@
 {
   "name": "حياتي",
   "short_name": "حياتي",
-  "description": "مساعدك الشخصي لتنظيم يومك وحياتك — مهام وعادات وتذكيرات وإحصائيات",
+  "description": "مساعدك الشخصي لتنظيم يومك وحياتك — مهام، عادات، تذكيرات، وإحصائيات",
   "lang": "ar",
   "dir": "rtl",
-
-  "start_url": "./",
+  "start_url": "./index.html",
   "scope": "./",
-
   "display": "standalone",
-  "display_override": [
-    "standalone",
-    "minimal-ui"
-  ],
-
   "orientation": "portrait",
-
   "background_color": "#F8F9FA",
   "theme_color": "#0066FF",
-
-  "categories": [
-    "productivity",
-    "lifestyle",
-    "utilities"
-  ],
-
+  "categories": ["productivity", "lifestyle", "utilities"],
   "icons": [
     {
       "src": "assets/icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "any maskable"
     },
     {
       "src": "assets/icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "any maskable"
     },
     {
       "src": "assets/icons/icon-512-rounded.png",
@@ -45,50 +31,29 @@
       "purpose": "maskable"
     }
   ],
-
   "shortcuts": [
     {
       "name": "إضافة مهمة",
       "short_name": "مهمة",
       "description": "أضف مهمة جديدة سريعًا",
       "url": "./index.html#/home?action=add",
-      "icons": [
-        {
-          "src": "assets/icons/icon-192.png",
-          "sizes": "192x192",
-          "type": "image/png",
-          "purpose": "any"
-        }
-      ]
+      "icons": [{ "src": "assets/icons/shortcut-add.png", "sizes": "96x96", "type": "image/png" }]
     },
     {
       "name": "العادات",
       "short_name": "عادات",
       "description": "عرض عاداتك اليومية",
       "url": "./index.html#/habits",
-      "icons": [
-        {
-          "src": "assets/icons/shortcut-habits.png",
-          "sizes": "96x96",
-          "type": "image/png",
-          "purpose": "any"
-        }
-      ]
+      "icons": [{ "src": "assets/icons/shortcut-habits.png", "sizes": "96x96", "type": "image/png" }]
     },
     {
       "name": "التقويم",
       "short_name": "تقويم",
       "description": "عرض تقويم مهامك",
-      "icons": [
-        {
-          "src": "assets/icons/icon-192.png",
-          "sizes": "192x192",
-          "type": "image/png",
-          "purpose": "any"
-        }
-      ]
+      "url": "./index.html#/calendar",
+      "icons": [{ "src": "assets/icons/shortcut-calendar.png", "sizes": "96x96", "type": "image/png" }]
     }
   ],
-
+  "display_override": ["standalone", "minimal-ui"],
   "prefer_related_applications": false
 }
