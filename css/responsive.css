@@ -1,77 +1,393 @@
 /* =========================================================
    حياتي — Responsive Styles
-   Mobile-first, optimized for Android & iPhone
+   Mobile First / Android / iPhone / Tablet
    ========================================================= */
 
-/* ---------- Base mobile (default) ---------- */
+/* ---------- Very small phones ---------- */
+
 @media (max-width: 360px) {
-  body { font-size: 14px; }
-  .hero-title { font-size: 22px; }
-  .app-header .brand-name { font-size: 17px; }
-  .quick-row { gap: 6px; }
-  .quick-stat { padding: 10px 6px; }
-  .quick-stat .num { font-size: 17px; }
-  .nav-item { font-size: 9px; }
-  .nav-home-label { font-size: 9px; }
-  .field-row { grid-template-columns: 1fr; }
+
+  body {
+    font-size: 14px;
+  }
+
+  .view-container {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .app-header {
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+
+  .app-header .brand-name {
+    font-size: 17px;
+  }
+
+  .app-header .brand-tag {
+    font-size: 9.5px;
+  }
+
+  .app-header .header-actions {
+    gap: 5px;
+  }
+
+  .icon-btn,
+  .avatar {
+    width: 39px;
+    height: 39px;
+    min-width: 39px;
+  }
+
+  .hero-card {
+    padding: 20px 17px;
+    border-radius: 24px;
+  }
+
+  .hero-title {
+    font-size: 22px;
+  }
+
+  .hero-sub {
+    font-size: 11.5px;
+  }
+
+  .quick-row {
+    gap: 6px;
+  }
+
+  .quick-stat {
+    padding: 10px 5px;
+    border-radius: 14px;
+  }
+
+  .quick-stat .num {
+    font-size: 17px;
+  }
+
+  .quick-stat .lbl {
+    font-size: 9.5px;
+  }
+
+  .task-card {
+    padding: 13px 13px 12px;
+  }
+
+  .tc-name {
+    font-size: 14px;
+  }
+
+  .tc-desc {
+    font-size: 11px;
+  }
+
+  .tc-meta {
+    font-size: 10.5px;
+  }
+
+  .bottom-nav {
+    width: calc(100% - 16px);
+    height: 62px;
+    bottom: calc(6px + var(--safe-bottom));
+    border-radius: 20px;
+  }
+
+  .nav-item {
+    font-size: 8.5px;
+  }
+
+  .nav-item svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .nav-home {
+    margin-top: -19px;
+  }
+
+  .nav-home-bubble {
+    width: 49px;
+    height: 49px;
+  }
+
+  .nav-home-label {
+    font-size: 8.5px;
+  }
+
+  .field-row {
+    grid-template-columns: 1fr;
+  }
+
+  .pct-options {
+    gap: 4px;
+  }
+
+  .pct-opt {
+    font-size: 10px;
+  }
 }
 
-/* ---------- Larger phones / phablets ---------- */
+/* ---------- Standard phones ---------- */
+
+@media (min-width: 361px) and (max-width: 413px) {
+
+  .hero-title {
+    font-size: 25px;
+  }
+
+  .quick-stat {
+    padding: 12px 8px;
+  }
+
+  .bottom-nav {
+    width: calc(100% - 20px);
+  }
+}
+
+/* ---------- Larger phones ---------- */
+
 @media (min-width: 414px) {
-  .view-container { padding: 0 18px; }
-  .hero-title { font-size: 28px; }
-  .hero-card { padding: 26px 24px; }
+
+  .view-container {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .hero-card {
+    padding: 25px 22px;
+  }
+
+  .hero-title {
+    font-size: 28px;
+  }
+
+  .quick-row {
+    gap: 10px;
+  }
+
+  .task-card {
+    padding: 16px 16px 14px;
+  }
 }
 
-/* ---------- Tablet / desktop ---------- */
+/* ---------- Large phones / small tablets ---------- */
+
+@media (min-width: 480px) {
+
+  .view-container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .hero-title {
+    font-size: 29px;
+  }
+
+  .bottom-nav {
+    width: calc(100% - 28px);
+  }
+}
+
+/* ---------- Tablet / Desktop ---------- */
+
 @media (min-width: 640px) {
+
   .app-shell {
     border-left: 1px solid var(--border);
     border-right: 1px solid var(--border);
-    box-shadow: 0 0 60px rgba(0,0,0,0.06);
+
+    box-shadow:
+      0 0 70px rgba(23,32,51,.06);
   }
-  .view-container { padding: 0 22px; }
-  .hero-title { font-size: 30px; }
-  .stat-grid-2 { grid-template-columns: 1fr 1fr 1fr; }
+
+  .view-container {
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+
+  .hero-title {
+    font-size: 30px;
+  }
+
+  .stat-grid-2 {
+    grid-template-columns: repeat(3,1fr);
+  }
+
+  .bottom-nav {
+    bottom: 12px;
+  }
 }
 
 /* ---------- Landscape ---------- */
+
 @media (orientation: landscape) and (max-height: 480px) {
-  .hero-card { padding: 16px 20px; }
-  .hero-title { font-size: 20px; }
-  .hero-progress { margin-top: 10px; }
-  .hero-add-btn { margin-top: 10px; padding: 8px 14px; }
-  .app-header { padding-top: 10px; padding-bottom: 8px; }
-  .bottom-nav { bottom: 6px; height: 54px; }
-  .nav-home { margin-top: -18px; }
-  .nav-home-bubble { width: 46px; height: 46px; }
-  .app-shell { padding-bottom: calc(70px + var(--safe-bottom)); }
+
+  .app-header {
+    padding-top: 8px;
+    padding-bottom: 7px;
+  }
+
+  .hero-card {
+    padding: 16px 19px;
+    border-radius: 22px;
+  }
+
+  .hero-title {
+    margin-top: 3px;
+    font-size: 20px;
+  }
+
+  .hero-sub {
+    font-size: 11px;
+  }
+
+  .hero-progress {
+    margin-top: 9px;
+  }
+
+  .hero-add-btn {
+    margin-top: 9px;
+    min-height: 40px;
+    padding: 8px 14px;
+  }
+
+  .quick-row {
+    margin-top: 9px;
+  }
+
+  .tasks-stack {
+    margin-top: 13px;
+  }
+
+  .bottom-nav {
+    height: 54px;
+    bottom: 5px;
+  }
+
+  .nav-home {
+    margin-top: -16px;
+  }
+
+  .nav-home-bubble {
+    width: 45px;
+    height: 45px;
+  }
+
+  .nav-item {
+    height: 48px;
+  }
+
+  .app-shell {
+    padding-bottom:
+      calc(64px + var(--safe-bottom));
+  }
 }
 
-/* ---------- Dark mode: prevent white flash ---------- */
+/* ---------- Dark color-scheme ---------- */
+
 @media (prefers-color-scheme: dark) {
-  html[data-theme="auto"] { color-scheme: dark; }
+  html[data-theme="auto"] {
+    color-scheme: dark;
+  }
 }
-html[data-theme="dark"] { color-scheme: dark; }
-html[data-theme="light"] { color-scheme: light; }
 
-/* Background color set on html element to prevent flash */
-html { background: var(--bg); }
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
 
-/* ---------- Touch targets: minimum 44x44 ---------- */
-.icon-btn, .nav-item, .habit-act-btn, .settings-row { min-height: 44px; }
-.btn { min-height: 48px; }
-.cal-day { min-width: 36px; min-height: 36px; }
+html[data-theme="light"] {
+  color-scheme: light;
+}
 
-/* ---------- Print: hide non-essential ---------- */
+html {
+  background: var(--bg);
+}
+
+/* ---------- Touch targets ---------- */
+
+.icon-btn,
+.nav-item,
+.habit-act-btn,
+.settings-row {
+  min-height: 44px;
+}
+
+.btn {
+  min-height: 48px;
+}
+
+.cal-day {
+  min-width: 36px;
+  min-height: 36px;
+}
+
+/* ---------- Safe area ---------- */
+
+@supports (padding: max(0px)) {
+
+  .app-shell {
+    padding-bottom:
+      calc(
+        var(--nav-h) +
+        max(12px, var(--safe-bottom)) +
+        14px
+      );
+  }
+
+  .bottom-nav {
+    bottom:
+      calc(
+        7px +
+        max(0px, var(--safe-bottom))
+      );
+  }
+}
+
+/* ---------- Print ---------- */
+
 @media print {
-  .bottom-nav, .app-header, .modal-root, .toast-container { display: none !important; }
-  .app-shell { padding: 0; box-shadow: none; }
-  body { background: #fff; }
+
+  .bottom-nav,
+  .app-header,
+  .modal-root,
+  .toast-container,
+  .motivational-banner {
+    display: none !important;
+  }
+
+  .app-shell {
+    padding: 0;
+    max-width: none;
+    box-shadow: none;
+    border: 0;
+  }
+
+  body {
+    background: #fff;
+  }
 }
 
-/* ---------- Larger text option (accessibility) ---------- */
-.text-lg body { font-size: 16px; }
-.text-lg .hero-title { font-size: 28px; }
-.text-lg .tc-name { font-size: 16.5px; }
-.text-lg .input, .text-lg .textarea, .text-lg .select { font-size: 15px; }
+/* ---------- Larger Text ---------- */
+
+.text-lg body {
+  font-size: 16px;
+}
+
+.text-lg .hero-title {
+  font-size: 28px;
+}
+
+.text-lg .tc-name {
+  font-size: 16.5px;
+}
+
+.text-lg .input,
+.text-lg .textarea,
+.text-lg .select {
+  font-size: 15px;
+}
+
+.text-lg .nav-item {
+  font-size: 10.5px;
+}
