@@ -246,6 +246,12 @@
 
       <div class="section-title"><h2>عن التطبيق</h2></div>
       <div class="settings-group">
+        <button class="settings-row" id="s-install-app">
+          <div class="sr-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 8l5-5 5 5M5 21h14"/></svg></div>
+          <div class="sr-label">تثبيت التطبيق</div>
+          <div class="sr-value">إضافة للشاشة الرئيسية</div>
+          <div class="sr-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M14 6l-6 6 6 6"/></svg></div>
+        </button>
         <button class="settings-row" id="s-about">
           <div class="sr-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8v.5"/></svg></div>
           <div class="sr-label">عن حياتي</div>
@@ -339,6 +345,22 @@
     });
     // about
     view.querySelector('#s-about').addEventListener('click', () => openAboutModal());
+    // install
+    view.querySelector('#s-install-app').addEventListener('click', () => {
+      const isStandalone = (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true;
+      if (isStandalone) {
+        Notifications.toast('التطبيق مثبت بالفعل على جهازك', 'success');
+        return;
+      }
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+      } else {
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        if (isIOS) showIOSInstallHint();
+        else Notifications.info('افتح التطبيق على المتصفح ثم اختر "تثبيت" من القائمة');
+      }
+    });
   }
 
   /* ---------- Modals: name, reminders, about, search, notifs ---------- */
@@ -695,7 +717,6 @@
     // hide splash and show app
     setTimeout(() => {
       hideSplash();
-      // welcome toast + motivational
       const lastVisit = Storage.getLastVisit();
       const today = DateH.todayStr();
       const lastVisitDate = lastVisit ? new Date(lastVisit) : null;
@@ -704,11 +725,177 @@
         setTimeout(() => Notifications.showMotivational(), 600);
       }
       Storage.setLastVisit(Date.now());
-
-      // check end-of-day summary periodically
       setInterval(() => Notifications.checkEndOfDaySummary(), 60 * 1000);
+
+      // Setup install prompt
+      setupInstallPrompt();
     }, 1200);
+
+    // Register service worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./service-worker.js')
+        .then((reg) => {
+          console.log('[PWA] Service Worker registered');
+          // Listen for updates
+          reg.addEventListener('updatefound', () => {
+            const newWorker = reg.installing;
+            newWorker.addEventListener('statechange', () => {
+              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                Notifications.toast('تحديث متاح — سيتم تفعيله عند إعادة الفتح', 'info', { duration: 3500 });
+              }
+            });
+          });
+        })
+        .catch((err) => console.warn('[PWA] SW registration failed:', err));
+    }
+
+    // Handle PWA shortcuts (e.g., ?action=add)
+    const params = new URLSearchParams(location.search);
+    const action = params.get('action');
+    if (action === 'add') {
+      setTimeout(() => Tasks.openAddModal(), 1500);
+    }
+
+    // Listen for messages from service worker
+    navigator.serviceWorker.addEventListener && navigator.serviceWorker.addEventListener('message', (event) => {
+      if (event.data && event.data.type === 'CHECK_REMINDERS') {
+        Notifications.checkUpcomingTasks();
+        Notifications.checkHabits();
+        Notifications.checkReminders();
+      }
+    });
   };
+
+  /* ---------- PWA Install Prompt ---------- */
+  let deferredPrompt = null;
+
+  function setupInstallPrompt() {
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      showInstallBanner();
+    });
+
+    window.addEventListener('appinstalled', () => {
+      Notifications.toast('تم تثبيت حياتي بنجاح', 'success', { duration: 3000 });
+      hideInstallBanner();
+      deferredPrompt = null;
+      // Track install
+      const stats = Storage.getStats();
+      stats.installedAt = Date.now();
+      Storage.setStats(stats);
+    });
+
+    // If already installed (standalone), don't show banner
+    if (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) {
+      return;
+    }
+    // iOS doesn't support beforeinstallprompt; show custom iOS instructions
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    const isStandalone = window.navigator.standalone === true;
+    if (isIOS && !isStandalone) {
+      setTimeout(() => showIOSInstallHint(), 2000);
+    }
+  }
+
+  function showInstallBanner() {
+    let banner = document.getElementById('install-banner');
+    if (banner) return;
+    banner = document.createElement('div');
+    banner.id = 'install-banner';
+    banner.style.cssText = `
+      position: fixed; bottom: calc(var(--safe-bottom, 0px) + 90px);
+      left: 50%; transform: translateX(-50%);
+      width: calc(100% - 32px); max-width: var(--max-w, 480px);
+      background: var(--card, #fff); color: var(--text, #111);
+      padding: 14px 16px; border-radius: 18px;
+      box-shadow: 0 14px 36px rgba(0,0,0,0.18), 0 4px 10px rgba(0,0,0,0.10);
+      display: flex; align-items: center; gap: 12px;
+      z-index: 60; border: 1px solid var(--border, rgba(0,0,0,0.06));
+      animation: bannerIn .4s cubic-bezier(.2,.8,.2,1);
+    `;
+    banner.innerHTML = `
+      <div style="width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#0066FF,#22B8FF);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-weight:700;font-size:13.5px;">ثبّت حياتي على جهازك</div>
+        <div style="font-size:11.5px;color:var(--muted,#7B8797);margin-top:2px;">وصول أسرع ويعمل بدون إنترنت</div>
+      </div>
+      <button id="install-btn" style="background:linear-gradient(135deg,#0066FF,#22B8FF);color:#fff;border:0;padding:9px 14px;border-radius:11px;font-weight:700;font-size:13px;flex-shrink:0;">تثبيت</button>
+      <button id="install-dismiss" style="background:transparent;border:0;padding:6px;color:var(--muted,#7B8797);flex-shrink:0;" aria-label="إغلاق">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    `;
+    document.body.appendChild(banner);
+    banner.querySelector('#install-btn').addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'dismissed') {
+        // keep banner hidden
+      }
+      deferredPrompt = null;
+      hideInstallBanner();
+    });
+    banner.querySelector('#install-dismiss').addEventListener('click', () => {
+      hideInstallBanner();
+      // Don't show again for 7 days
+      localStorage.setItem('hayati.installDismissed', Date.now().toString());
+    });
+  }
+
+  function hideInstallBanner() {
+    const b = document.getElementById('install-banner');
+    if (b) {
+      b.style.transition = 'opacity .3s ease, transform .3s ease';
+      b.style.opacity = '0';
+      b.style.transform = 'translateX(-50%) translateY(16px)';
+      setTimeout(() => b.remove(), 300);
+    }
+  }
+
+  function showIOSInstallHint() {
+    const dismissed = localStorage.getItem('hayati.iosHintDismissed');
+    if (dismissed && (Date.now() - parseInt(dismissed, 10)) < 7 * 24 * 3600 * 1000) return;
+
+    const banner = document.createElement('div');
+    banner.id = 'ios-install-hint';
+    banner.style.cssText = `
+      position: fixed; bottom: calc(var(--safe-bottom, 0px) + 90px);
+      left: 50%; transform: translateX(-50%);
+      width: calc(100% - 32px); max-width: var(--max-w, 480px);
+      background: var(--card, #fff); color: var(--text, #111);
+      padding: 14px 16px; border-radius: 18px;
+      box-shadow: 0 14px 36px rgba(0,0,0,0.18), 0 4px 10px rgba(0,0,0,0.10);
+      z-index: 60; border: 1px solid var(--border, rgba(0,0,0,0.06));
+      animation: bannerIn .4s cubic-bezier(.2,.8,.2,1);
+    `;
+    banner.innerHTML = `
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+        <div style="width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,#0066FF,#22B8FF);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div style="flex:1;font-weight:700;font-size:13.5px;">ثبّت حياتي على الـ iPhone</div>
+        <button id="ios-hint-dismiss" style="background:transparent;border:0;padding:4px;color:var(--muted,#7B8797);" aria-label="إغلاق">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <ol style="font-size:12px;color:var(--text-soft,#374);margin:0;padding-right:18px;line-height:1.7;">
+        <li>اضغط زر المشاركة <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block;vertical-align:middle;"><path d="M12 3v12M7 8l5-5 5 5M5 21h14" stroke-linecap="round" stroke-linejoin="round"/></svg> أسفل المتصفح</li>
+        <li>اختر "إضافة إلى الشاشة الرئيسية" <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block;vertical-align:middle;"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></li>
+        <li>اضغط "إضافة" — وستجد حياتي على شاشتك</li>
+      </ol>
+    `;
+    document.body.appendChild(banner);
+    banner.querySelector('#ios-hint-dismiss').addEventListener('click', () => {
+      banner.remove();
+      localStorage.setItem('hayati.iosHintDismissed', Date.now().toString());
+    });
+    setTimeout(() => {
+      if (banner.parentNode) banner.remove();
+    }, 15000);
+  }
 
   global.App = App;
   global.closeModals = closeModals;
