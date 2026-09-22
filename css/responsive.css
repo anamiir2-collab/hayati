@@ -1,0 +1,77 @@
+/* =========================================================
+   حياتي — Responsive Styles
+   Mobile-first, optimized for Android & iPhone
+   ========================================================= */
+
+/* ---------- Base mobile (default) ---------- */
+@media (max-width: 360px) {
+  body { font-size: 14px; }
+  .hero-title { font-size: 22px; }
+  .app-header .brand-name { font-size: 17px; }
+  .quick-row { gap: 6px; }
+  .quick-stat { padding: 10px 6px; }
+  .quick-stat .num { font-size: 17px; }
+  .nav-item { font-size: 9px; }
+  .nav-home-label { font-size: 9px; }
+  .field-row { grid-template-columns: 1fr; }
+}
+
+/* ---------- Larger phones / phablets ---------- */
+@media (min-width: 414px) {
+  .view-container { padding: 0 18px; }
+  .hero-title { font-size: 28px; }
+  .hero-card { padding: 26px 24px; }
+}
+
+/* ---------- Tablet / desktop ---------- */
+@media (min-width: 640px) {
+  .app-shell {
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    box-shadow: 0 0 60px rgba(0,0,0,0.06);
+  }
+  .view-container { padding: 0 22px; }
+  .hero-title { font-size: 30px; }
+  .stat-grid-2 { grid-template-columns: 1fr 1fr 1fr; }
+}
+
+/* ---------- Landscape ---------- */
+@media (orientation: landscape) and (max-height: 480px) {
+  .hero-card { padding: 16px 20px; }
+  .hero-title { font-size: 20px; }
+  .hero-progress { margin-top: 10px; }
+  .hero-add-btn { margin-top: 10px; padding: 8px 14px; }
+  .app-header { padding-top: 10px; padding-bottom: 8px; }
+  .bottom-nav { bottom: 6px; height: 54px; }
+  .nav-home { margin-top: -18px; }
+  .nav-home-bubble { width: 46px; height: 46px; }
+  .app-shell { padding-bottom: calc(70px + var(--safe-bottom)); }
+}
+
+/* ---------- Dark mode: prevent white flash ---------- */
+@media (prefers-color-scheme: dark) {
+  html[data-theme="auto"] { color-scheme: dark; }
+}
+html[data-theme="dark"] { color-scheme: dark; }
+html[data-theme="light"] { color-scheme: light; }
+
+/* Background color set on html element to prevent flash */
+html { background: var(--bg); }
+
+/* ---------- Touch targets: minimum 44x44 ---------- */
+.icon-btn, .nav-item, .habit-act-btn, .settings-row { min-height: 44px; }
+.btn { min-height: 48px; }
+.cal-day { min-width: 36px; min-height: 36px; }
+
+/* ---------- Print: hide non-essential ---------- */
+@media print {
+  .bottom-nav, .app-header, .modal-root, .toast-container { display: none !important; }
+  .app-shell { padding: 0; box-shadow: none; }
+  body { background: #fff; }
+}
+
+/* ---------- Larger text option (accessibility) ---------- */
+.text-lg body { font-size: 16px; }
+.text-lg .hero-title { font-size: 28px; }
+.text-lg .tc-name { font-size: 16.5px; }
+.text-lg .input, .text-lg .textarea, .text-lg .select { font-size: 15px; }

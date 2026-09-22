@@ -1,0 +1,187 @@
+/* =========================================================
+   حياتي — Animations
+   Soft, fast, premium micro-interactions (iOS-style)
+   ========================================================= */
+
+/* ---------- Keyframes ---------- */
+@keyframes splashIn {
+  from { opacity: 0; transform: scale(0.92) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes splashPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 16px 40px rgba(0,102,255,0.30); }
+  50%      { transform: scale(1.04); box-shadow: 0 20px 50px rgba(0,102,255,0.38); }
+}
+@keyframes loaderSlide {
+  0%   { transform: translateX(0); }
+  50%  { transform: translateX(150px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes sheetUp {
+  from { transform: translate(-50%, 100%); }
+  to   { transform: translate(-50%, 0); }
+}
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(-16px) scale(.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes toastOut {
+  from { opacity: 1; transform: translateY(0) scale(1); }
+  to   { opacity: 0; transform: translateY(-16px) scale(.94); }
+}
+@keyframes bannerIn {
+  from { opacity: 0; transform: translate(-50%, -20px); }
+  to   { opacity: 1; transform: translate(-50%, 0); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes checkPop {
+  0%   { transform: scale(.6); opacity: 0; }
+  60%  { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes barGrow {
+  from { width: 0; }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ---------- View transitions ---------- */
+.view-enter {
+  animation: fadeInUp .4s cubic-bezier(.2,.8,.2,1);
+}
+.view-enter-stagger > * {
+  opacity: 0;
+  animation: fadeInUp .45s cubic-bezier(.2,.8,.2,1) forwards;
+}
+.view-enter-stagger > *:nth-child(1) { animation-delay: .04s; }
+.view-enter-stagger > *:nth-child(2) { animation-delay: .08s; }
+.view-enter-stagger > *:nth-child(3) { animation-delay: .12s; }
+.view-enter-stagger > *:nth-child(4) { animation-delay: .16s; }
+.view-enter-stagger > *:nth-child(5) { animation-delay: .20s; }
+.view-enter-stagger > *:nth-child(6) { animation-delay: .24s; }
+.view-enter-stagger > *:nth-child(7) { animation-delay: .28s; }
+.view-enter-stagger > *:nth-child(8) { animation-delay: .32s; }
+.view-enter-stagger > *:nth-child(n+9) { animation-delay: .36s; }
+
+/* ---------- Card interactions ---------- */
+.task-card { will-change: transform; }
+.task-card.tap { transform: scale(.985); }
+.task-card.exit { animation: cardExit .35s cubic-bezier(.4,0,.2,1) forwards; }
+@keyframes cardExit {
+  to { opacity: 0; transform: translateX(-120%) rotate(-3deg); }
+}
+
+/* ---------- Checkbox completion ---------- */
+.tc-check.done-anim { animation: checkPop .35s cubic-bezier(.2,.8,.2,1); }
+.task-card.done { animation: fadeIn .35s ease; }
+
+/* ---------- Button press ---------- */
+.btn, .icon-btn, .nav-item, .chip, .chip-opt, .pct-opt {
+  -webkit-tap-highlight-color: transparent;
+}
+.btn:active { transform: scale(.97); }
+.icon-btn:active { transform: scale(.94); }
+.chip:active, .chip-opt:active, .pct-opt:active { transform: scale(.96); }
+.cal-day:active { transform: scale(.92); }
+
+/* ---------- Progress animation ---------- */
+.hero-progress .bar-fill,
+.tc-progress .bar-fill,
+.donut-fg,
+.bar-col .bar-box {
+  animation: barGrow .8s cubic-bezier(.2,.8,.2,1);
+}
+
+/* ---------- Skeleton loading ---------- */
+.skeleton {
+  background: linear-gradient(90deg, var(--card-2) 25%, var(--border-strong) 50%, var(--card-2) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite linear;
+  border-radius: 12px;
+}
+.skeleton-line { height: 14px; margin-bottom: 8px; }
+.skeleton-card {
+  height: 96px; border-radius: var(--r-lg); margin-bottom: 10px;
+}
+
+/* ---------- Empty state animation ---------- */
+.empty-ill { animation: float 3s ease-in-out infinite; }
+
+/* ---------- Toast out ---------- */
+.toast.out { animation: toastOut .3s ease forwards; }
+
+/* ---------- Spinner ---------- */
+.spinner {
+  width: 22px; height: 22px; border-radius: 50%;
+  border: 2.5px solid var(--border-strong);
+  border-top-color: var(--brand-primary);
+  animation: spin .8s linear infinite;
+}
+
+/* ---------- Modal animations ---------- */
+.modal-sheet.closing { animation: sheetDown .25s ease forwards; }
+@keyframes sheetDown {
+  to { transform: translate(-50%, 100%); }
+}
+.modal-backdrop.closing { animation: fadeIn .25s ease reverse forwards; }
+
+/* ---------- Focus states (accessibility) ---------- */
+.icon-btn:focus-visible,
+.btn:focus-visible,
+.input:focus-visible,
+.textarea:focus-visible,
+.select:focus-visible,
+.nav-item:focus-visible,
+.chip:focus-visible,
+.chip-opt:focus-visible,
+.pct-opt:focus-visible,
+.cal-day:focus-visible,
+.toggle:focus-visible,
+.tab:focus-visible,
+.settings-row:focus-visible,
+.habit-act-btn:focus-visible {
+  outline: 2.5px solid var(--brand-primary);
+  outline-offset: 2px;
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+/* ---------- Stacked cards layered effect ---------- */
+.task-card.layer-1 { transform: translateY(-4px) scale(1); z-index: 3; }
+.task-card.layer-2 { transform: translateY(-2px) scale(.985); z-index: 2; opacity: .97; }
+.task-card.layer-3 { transform: translateY(0) scale(.97); z-index: 1; opacity: .94; }
+.task-card.layer-4,
+.task-card.layer-5,
+.task-card.layer-6,
+.task-card.layer-7,
+.task-card.layer-8 { transform: translateY(2px) scale(.96); z-index: 0; opacity: .9; }
