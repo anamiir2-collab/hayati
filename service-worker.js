@@ -3,7 +3,7 @@
    Offline-first caching, install prompt support
    ========================================================= */
 
-const CACHE_VERSION = 'hayati-v1.0.1';
+const CACHE_VERSION = 'hayati-v1.0.2-icons';
 const STATIC_CACHE = CACHE_VERSION + '-static';
 const RUNTIME_CACHE = CACHE_VERSION + '-runtime';
 
@@ -23,9 +23,12 @@ const STATIC_ASSETS = [
   './js/calendar.js',
   './js/statistics.js',
   './js/app.js',
-  './assets/icons/icon-192.png',
-  './assets/icons/icon-512.png',
-  './assets/icons/icon-512-rounded.png'
+  './assets/icons/favicon-32.png',
+'./assets/icons/apple-touch-icon.png',
+'./assets/icons/icon-192.png',
+'./assets/icons/icon-512.png',
+'./assets/icons/icon-512-rounded.png',
+'./assets/icons/shortcut-habits.png'
 ];
 
 // Install: pre-cache static assets
