@@ -24,11 +24,11 @@ const STATIC_ASSETS = [
   './js/statistics.js',
   './js/app.js',
   './assets/icons/favicon-32.png',
-'./assets/icons/apple-touch-icon.png',
-'./assets/icons/icon-192.png',
-'./assets/icons/icon-512.png',
-'./assets/icons/icon-512-rounded.png',
-'./assets/icons/shortcut-habits.png'
+   './assets/icons/apple-touch-icon.png',
+   './assets/icons/icon-192.png',
+   './assets/icons/icon-512.png',
+   './assets/icons/icon-512-rounded.png',
+   './assets/icons/shortcut-habits.png'
 ];
 
 // Install: pre-cache static assets
